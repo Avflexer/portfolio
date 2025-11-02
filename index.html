@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tech & Crypto Portfolio</title>
+  <meta name="description" content="Portfolio of a 200-level student into tech and crypto. Full-stack dev, KOL/Ambassador, Community Manager, Shiller/Reply Guy/Raider, Crypto Trader." />
+
+  <!-- Google font (falls back to system fonts if blocked) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ---- Reset & base ---- */
+    :root{
+      --bg:#0f1724; /* deep navy */
+      --card:#0b1220;
+      --muted:#9aa6bf;
+      --accent:#7c3aed; /* purple */
+      --glass: rgba(255,255,255,0.04);
+      --glass-2: rgba(255,255,255,0.02);
+      --radius:14px;
+      --maxwidth:1100px;
+      --gap:18px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background: #000; /* Changed to dark space background */
+      color:#e6eef8;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+      padding:32px 20px;
+      display:flex;
+      justify-content:center;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .wrap{width:100%;max-width:var(--maxwidth);}
+
+    header{
+      display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;
+    }
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{
+      width:58px;height:58px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#06b6d4);display:flex;align-items:center;justify-content:center;font-weight:800;color:white;font-size:18px;box-shadow:0 6px 20px rgba(0,0,0,0.6)
+    }
+    nav a{color:var(--muted);text-decoration:none;margin-left:18px;font-weight:600}
+    nav a:hover{color:var(--accent)}
+
+    /* Hero */
+    .hero{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      padding:28px;border-radius:var(--radius);display:grid;grid-template-columns:1fr 380px;gap:18px;align-items:center;margin-bottom:18px;box-shadow:0 8px 40px rgba(0,0,0,0.6);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
+    .hero.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .intro h1{margin:0 0 6px 0;font-size:28px;letter-spacing:-0.4px}
+    .intro p.lead{color:var(--muted);margin:0 0 10px}
+    .badge{display:inline-block;background:linear-gradient(90deg,#0ea5a4,#7c3aed);padding:6px 10px;border-radius:999px;font-weight:700;font-size:12px}
+
+    .hero-img{border-radius:12px;overflow:hidden;position:relative}
+    .hero-img img{width:100%;height:100%;object-fit:cover;display:block}
+
+    /* Main sections */
+    .grid{display:grid;grid-template-columns:1fr 360px;gap:18px}
+
+    main.card{background:var(--card);padding:18px;border-radius:var(--radius); opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease-out, transform 0.5s ease-out;}
+    main.card.visible { opacity: 1; transform: translateY(0); }
+    aside.card{background:var(--card);padding:18px;border-radius:var(--radius);height:fit-content; opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease-out, transform 0.5s ease-out;}
+    aside.card.visible { opacity: 1; transform: translateY(0); }
+
+    h2.section-title{font-size:18px;margin:6px 0 12px}
+    p.small{color:var(--muted);margin:0 0 12px}
+
+    /* skill box */
+    .skill{
+      background:var(--glass);
+      padding:14px;border-radius:12px;margin-bottom:12px;display:flex;gap:14px;align-items:flex-start;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
+    .skill.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .skill .icon{width:56px;height:56px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:700}
+    .skill h3{margin:0;font-size:15px}
+    .skill p{margin:6px 0 0;color:var(--muted);font-size:14px}
+
+    /* trader gallery responsive */
+    .trader-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px}
+    .trade-slot{background:var(--glass-2);border-radius:10px;padding:6px;min-height:110px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .trade-slot img{width:100%;height:100%;object-fit:cover;display:block}
+    .trade-note{font-size:13px;color:var(--muted);text-align:center;margin-top:8px}
+
+    /* community list */
+    .chips{display:flex;flex-wrap:wrap;gap:8px}
+    .chip{background:rgba(255,255,255,0.03);padding:8px 10px;border-radius:999px;font-weight:600;color:var(--muted)}
+
+    /* CTA */
+    .cta{margin-top:14px;display:flex;gap:10px}
+    .btn{padding:10px 12px;border-radius:10px;border:0;cursor:pointer;font-weight:700}
+    .btn-primary{background:linear-gradient(90deg,var(--accent),#06b6d4);color:white}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+
+    footer{margin-top:18px;color:var(--muted);text-align:center}
+
+    /* responsive */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr;}
+      .grid{grid-template-columns:1fr}
+      .trader-gallery{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:560px){
+      body{padding:20px 12px}
+      .trader-gallery{grid-template-columns:1fr}
+    }
+
+    /* small helper styles for form */
+    .contact-form{display:flex;flex-direction:column;gap:8px}
+    .contact-form input,.contact-form textarea{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px;border-radius:8px;color:inherit}
+
+    /* Stars for space background */
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+    .star {
+      position: absolute;
+      background: #fff;
+      border-radius: 50%;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">GA</div>
+        <div>
+          <div style="font-weight:800">GIFT ALVIN</div>
+          <div style="font-size:12px;color:var(--muted)">200-level student • tech & crypto enthusiast</div>
+        </div>
+      </div>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#trader">Trading</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="intro">
+        <span class="badge">200lvl • Student</span>
+        <h1>Hi -I build things on the web and move communities.</h1>
+        <p class="lead"> My Name is Udeh Gift Alvin I’m a 200-level student passionate about building beautiful, reliable full-stack apps, growing crypto-native communities, and trading on-chain and on CEX/DEX. This portfolio highlights what I do and how I work.</p>
+        <div class="cta">
+          <button class="btn btn-primary" onclick="scrollToSection('#skills')">See my skills</button>
+          <button class="btn btn-ghost" onclick="scrollToSection('#contact')">Hire / Collaborate</button>
+        </div>
+
+        <div style="margin-top:12px;color:var(--muted);font-size:13px">Quick links:</div>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <a class="chip" href="#">Resume</a>
+          <a class="chip" href="#trader">Trading proof</a>
+          <a class="chip" href="#contact">Contact</a>
+        </div>
+      </div>
+
+      <div class="hero-img">
+        <!-- Replace src with your preferred tech/crypto hero image -->
+        <img src="image (2).jpg" alt="tech & crypto hero">
+      </div>
+    </section>
+
+    <div class="grid">
+      <main class="card" id="about">
+        <h2 class="section-title">About me</h2>
+        <p class="small">I’m a 200-level student who fell in love with code and crypto. I focus on practical projects that ship value — from end-to-end web applications to growing communities and helping projects reach real people. Below you’ll find natural, human descriptions of what I do and ready-to-use examples you can copy to your GitHub README.</p>
+
+        <section id="skills" style="margin-top:10px">
+          <h2 class="section-title">Core Skills</h2>
+
+          <!-- Full Stack Developer -->
+          <div class="skill" aria-labelledby="fs-heading">
+            <div class="icon" style="background:linear-gradient(180deg,#111827,#0f1724)">🧩</div>
+            <div>
+              <h3 id="fs-heading">Full-stack developer</h3>
+              <p>
+                I build robust, maintainable web apps with clean architecture. On the front-end I use modern HTML5, CSS (Flexbox and Grid), and JavaScript (ES6+). For back-end work I design RESTful APIs, handle authentication, and integrate databases. Projects I ship are production-minded: responsive layouts, performance-conscious assets, and helpful developer documentation. I like to think from product -> UX -> code, so features are useful, testable, and easy to maintain.
+              </p>
+              <p style="color:var(--muted);font-size:13px;margin-top:8px">What to expect in my code: clear comments, semantic HTML, accessible components, and documented build/deploy steps.</p>
+            </div>
+          </div>
+
+          <!-- KOL / Ambassador -->
+          <div class="skill">
+            <div class="icon" style="background:linear-gradient(180deg,#2b6cb0,#7c3aed)">🌍</div>
+            <div>
+              <h3>KOL / Ambassador</h3>
+              <p>
+                As a Key Opinion Leader and ambassador I combine on-the-ground community knowledge with growth tactics. I run targeted awareness campaigns, localize messaging for a region, coordinate AMAs, and work with partners and creators to drive adoption. My strength is in turning early interest into active users through storytelling, consistent content, and measured incentives.
+              </p>
+              <p style="color:var(--muted);font-size:13px;margin-top:8px">Typical outputs: region-specific outreach, influencer collaborations, referral funnels, and analytic reports that track adoption.</p>
+            </div>
+          </div>
+
+          <!-- Community Management -->
+          <div class="skill">
+            <div class="icon" style="background:linear-gradient(180deg,#065f46,#16a34a)">🤝</div>
+            <div>
+              <h3>Community Management</h3>
+              <p>
+                I run communities like product teams run features: with clear guidelines, scheduled events, and active moderation. I keep engagement high by planning content calendars, rewards, contests, and regular check-ins. I create spaces where members feel heard and motivated to contribute.
+              </p>
+              <p style="color:var(--muted);font-size:13px;margin-top:8px">Tools & methods: Discord/Telegram moderation, engagement campaigns, feedback loops, conflict resolution, and growth tracking.</p>
+            </div>
+          </div>
+
+          <!-- Shiller / Reply Guy / Raider -->
+          <div class="skill">
+            <div class="icon" style="background:linear-gradient(180deg,#b45309,#fb923c)">⚡</div>
+            <div>
+              <h3>Shiller • Reply Guy • Raider</h3>
+              <p>
+                I leverage fast, creative social activity to amplify messages and generate viral momentum. Whether it’s crafting catchy replies, organizing coordinated raiding (ethical & transparent), or seeding hype, I know how to make noise that converts into curiosity and signups. My approach is always aligned with project goals and community guidelines — energetic but responsible.
+              </p>
+            </div>
+          </div>
+
+          <!-- Crypto Trader -->
+          <div class="skill">
+            <div class="icon" style="background:linear-gradient(180deg,#0ea5a4,#06b6d4)">📈</div>
+            <div>
+              <h3>Crypto Trader</h3>
+              <p>
+                I trade across on-chain and off-chain markets. I’m comfortable with both short-term "degen" plays and disciplined feature trading strategies. I track risk closely, use position sizing rules, and keep a trade log to refine my edge.
+              </p>
+               <!-- Trader gallery -->
+              <div class="trader-gallery" id="trader">
+                <div class="trade-slot"><img src="photo_2025-09-30_22-19-02.jpg" alt="profit-1"></div>
+                <div class="trade-slot"><img src="photo_2025-09-30_22-19-31.jpg" alt="profit-2"></div>
+                <div class="trade-slot"><img src="photo_2025-09-30_22-55-52.jpg" alt="profit-3"></div>
+                <div class="trade-slot"><img src="photo_2025-09-30_22-47-12.jpg" alt="profit-4"></div>
+                <div class="trade-slot"><img src="photo_2025-09-30_22-51-08.jpg" alt="profit-5"></div>
+                <div class="trade-slot"><img src="photo_2025-09-30_22-51-13.jpg" alt="profit-6"></div>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+        <section style="margin-top:14px">
+          <h2 class="section-title">Projects & Examples</h2>
+         <p>Ambassador at <a style="text-decoration: none; color: white ;" href="1500x500 (1).jpeg">STORACHA</a></p>
+         <div class="trade-slot"> <img src="/1500x500 (1).jpeg" alt=""></div>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:10px">
+            <div style="background:var(--glass);padding:12px;border-radius:10px">
+              <div style="font-weight:700"> freelancing</div>
+              <div style="color:var(--muted);font-size:13px;margin-top:6px">With Proffessinalism I am a Web3 freelancer and fulltime jobber</div>
+            </div>
+
+            <div style="background:var(--glass);padding:12px;border-radius:10px">
+              <div style="font-weight:700">Pure Full-stack</div>
+              <div style="color:var(--muted);font-size:13px;margin-top:6px">I handle fullstack developement with fully rersponsie front-ends, frame works and beautiful UI-UX designs </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+      <aside class="card">
+        <h2 class="section-title">Contact & Quick Facts</h2>
+        <p class="small">I’m available for freelancing, ambassador roles, and community-led campaigns. I love collaboration and fast feedback loops.</p>
+
+        <div style="margin-top:8px">
+          <div style="font-weight:800">Location</div>
+          <div style="color:var(--muted);font-size:13px">Nigeria (open to remote)</div>
+        </div>
+
+        <div style="margin-top:8px">
+          <div style="font-weight:800">Tools I use</div>
+          <div style="color:var(--muted);font-size:13px">VSCode, GitHub, Node.js, Express, React, Tailwind (optional), Postgres / MongoDB, Web3 tools (ethers.js / web3.js)</div>
+        </div>
+
+        <div style="margin-top:8px">
+          <div style="font-weight:800">Community</div>
+          <div style="margin-top:12px;color:var(--muted);font-size:13px">Contact me at:</div>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <a class="chip" href="1315021698700935241">Discord</a>
+          <a class="chip" href="https://x.com/giftalvin2007?s=09">Twitter</a>
+          <a class="chip" href="https://t.me/droyeth">Telegram</a>
+        </div>
+        </div>
+
+        <div style="margin-top:12px">
+          <h3 style="margin:0 0 8px 0">Get in touch</h3>
+          <form id="contact" class="contact-form" onsubmit="sendMessage(event)">
+            <input id="name" placeholder="Your name" required />
+            <input id="email" type="email" placeholder="Email" required />
+            <textarea id="message" rows="4" placeholder="What do you want to build?" required></textarea>
+            <div style="display:flex;gap:8px">
+              <button type="submit" class="btn btn-primary">Send</button>
+              <button type="button" class="btn btn-ghost" onclick="downloadResume()">Download Resume</button>
+            </div>
+          </form>
+        </div>
+
+        <footer style="margin-top:14px">Made with ♥ • Avflexer — 200lvl student into tech & crypto</footer>
+      </aside>
+    </div>
+
+  <script>
+    // small JS to add interactivity — no build step required
+    function scrollToSection(sel){
+      const el = document.querySelector(sel);
+      if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+
+        async function sendMessage(e){
+          e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+      if(!name || !email || !message){
+        alert('Please fill all fields.');
+        return;
+      }
+      try {
+    const response = await fetch("https://formspree.io/f/meorgwob", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({ name, email, message })
+    });
+
+    if (response.ok) {
+      alert("✅ Thanks! Your message has been sent successfully.");
+      e.target.reset();
+    } else {
+      alert("⚠️ Oops! Something went wrong, please try again.");
+    }
+  } catch (error) {
+    console.error(error);
+    alert("❌ Network error. Please check your internet connection.");
+  }
+}
+
+  function downloadResume(){
+      // Change this to point to your resume PDF path in the repo
+      const resumeUrl = './resume.pdf';
+      window.open(resumeUrl, '_blank');
+    }
+
+    // Small accessibility helpers
+    (function(){
+      // ensure images have alt text where possible (developer should replace with meaningful alts)
+      document.querySelectorAll('img').forEach(img=>{
+        if(!img.alt || img.alt.trim()==='') img.alt = 'portfolio image';
+      })
+  })();
+
+  // Generate stars for space background
+  function createStars() {
+    const starsContainer = document.createElement('div');
+    starsContainer.className = 'stars';
+    document.body.insertBefore(starsContainer, document.body.firstChild); // Add at the beginning for z-index
+
+    for (let i = 0; i < 300; i++) { // Increased for more stars
+      const star = document.createElement('div');
+      star.className = 'star';
+      const size = Math.random() * 2 + 1; // 1-3px
+      star.style.width = `${size}px`;
+      star.style.height = `${size}px`;
+      star.style.top = `${Math.random() * 100}%`;
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.opacity = Math.random() * 0.5 + 0.3; // Vary opacity for depth
+      starsContainer.appendChild(star);
+    }
+  }
+  createStars();
+
+  // Fade-in on scroll
+  const fadeObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        fadeObserver.unobserve(entry.target); // Unobserve after visible to prevent repeat
+      }
+    });
+  }, { threshold: 0.1 }); // Trigger when 10% in view
+
+  document.querySelectorAll('.hero, .skill, main.card, aside.card').forEach(el => {
+    fadeObserver.observe(el);
+  });
+
+  </script>
+</body>
+</html>
